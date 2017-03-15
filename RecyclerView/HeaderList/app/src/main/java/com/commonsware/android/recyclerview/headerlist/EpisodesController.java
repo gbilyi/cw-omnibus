@@ -20,14 +20,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-class RowController extends RecyclerView.ViewHolder
+class EpisodesController extends RecyclerView.ViewHolder
     implements View.OnClickListener {
   TextView label=null;
   TextView size=null;
   ImageView icon=null;
   String template=null;
 
-  RowController(View row) {
+  EpisodesController(View row) {
     super(row);
 
     label=(TextView)row.findViewById(R.id.label);

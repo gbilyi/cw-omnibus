@@ -18,11 +18,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
-class HeaderController extends RecyclerView.ViewHolder {
+class PodcastsController extends RecyclerView.ViewHolder {
   TextView label=null;
   String template=null;
 
-  HeaderController(View row) {
+  PodcastsController(View row) {
     super(row);
 
     label=(TextView)row.findViewById(R.id.label);
@@ -30,7 +30,7 @@ class HeaderController extends RecyclerView.ViewHolder {
     template=label.getContext().getString(R.string.header_template);
   }
 
-  void bindModel(Integer headerIndex) {
-    label.setText(String.format(template, headerIndex.intValue()+1));
+  void bindModel(String headerIndex) {
+    label.setText(headerIndex);
   }
 }
