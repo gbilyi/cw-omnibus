@@ -5,19 +5,46 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
+import com.commonsware.android.recyclerview.headerlist.controller.EpisodesController;
+import com.commonsware.android.recyclerview.headerlist.controller.FeaturedController;
+import com.commonsware.android.recyclerview.headerlist.controller.PodcastsController;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * Created by gordbilyi on 3/14/17.
  */
 
 public class IconicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private static final String[] items = {"lorem", "ipsum", "dolor", "sit", "yo", "lorem", "ipsum",
-            "dolor", "sit", "yo", "lorem", "ipsum", "dolor", "sit", "yo"};
+    private static final String[] featured = {"lorem", "ipsum", "dolor", "sit", "yo", "lorem", "ipsum"};
+    private static final String[] podcasts = {"lorem", "ipsum", "dolor", "sit", "yo", "lorem", "ipsum"};
+    private static final String[] episodes = {"lorem", "ipsum", "dolor", "sit", "yo", "lorem", "ipsum"};
+
+    private List<String> mFeatured = new ArrayList<>(Arrays.asList(featured));
+    private List<String> mPodcats = new ArrayList<>(Arrays.asList(podcasts));
+    private List<String> mEpisodes = new ArrayList<>(Arrays.asList(episodes));
+
+    private List<List<String>> mData = new ArrayList<>();
 
     private Context mContext;
 
     public IconicAdapter(Context context) {
         this.mContext = context;
+
+        mData.add(mFeatured);
+        mData.add(mPodcats);
+        for (int i = 0; i < 20; i++) {
+            mData.add(mEpisodes);
+        }
+
+    }
+
+    //TODO make immutable ?
+    public List<List<String>> getData() {
+        return mData;
     }
 
     @Override
@@ -43,17 +70,17 @@ public class IconicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder instanceof FeaturedController) {
-            ((FeaturedController) holder).bindModel((String) getItem(position));
+            ((FeaturedController) holder).bindModel((List<String>) getItem(position));
         } else if (holder instanceof PodcastsController) {
-            ((PodcastsController) holder).bindModel((String) getItem(position));
+            ((PodcastsController) holder).bindModel((List<String>) getItem(position));
         } else {
-            ((EpisodesController) holder).bindModel((String) getItem(position));
+            ((EpisodesController) holder).bindModel((List<String>) getItem(position));
         }
     }
 
     @Override
     public int getItemCount() {
-        return items.length;
+        return mData.size();
     }
 
     @Override
@@ -69,6 +96,6 @@ public class IconicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     }
 
     private Object getItem(int position) {
-        return items[position];
+        return mData.get(position);
     }
 }

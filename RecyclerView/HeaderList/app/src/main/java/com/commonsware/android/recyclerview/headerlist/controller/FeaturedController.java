@@ -12,7 +12,7 @@
  https://commonsware.com/Android
  */
 
-package com.commonsware.android.recyclerview.headerlist;
+package com.commonsware.android.recyclerview.headerlist.controller;
 
 //TODO: change simple array list to a more complex data structure like list of different types of lists,
 // get data for a view pager from the new list
@@ -24,14 +24,19 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
-class FeaturedController extends RecyclerView.ViewHolder {
+import com.commonsware.android.recyclerview.headerlist.R;
+
+import java.util.List;
+
+public class FeaturedController extends RecyclerView.ViewHolder {
 
 
     ViewPager mPager;
     Context mContext;
 
-    FeaturedController(Context context, View row) {
+    public FeaturedController(Context context, View row) {
         super(row);
 
         mContext = context;
@@ -39,20 +44,26 @@ class FeaturedController extends RecyclerView.ViewHolder {
 
     }
 
-    void bindModel(String headerIndex) {
+    public void bindModel(List<String> list) {
         //label.setText(headerIndex);
-        mPager.setAdapter(new MyAdapter());
+        mPager.setAdapter(new MyAdapter(list));
     }
 
 
     private class MyAdapter extends PagerAdapter {
 
+        private List<String> mList;
+
+        public MyAdapter(List<String> list) {
+            mList = list;
+        }
 
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
             View view = LayoutInflater.from(mContext)
-                    .inflate(position == 0 ? R.layout.fragment_my
-                            : R.layout.fragment_your, container, false);
+                    .inflate(R.layout.fragment_my, container, false);
+            Button button = (Button) view.findViewById(R.id.button);
+            button.setText(mList.get(position));
             container.addView(view);
             return view;
         }
@@ -64,12 +75,7 @@ class FeaturedController extends RecyclerView.ViewHolder {
 
         @Override
         public int getCount() {
-            return 2;
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return "bla";
+            return mList.size();
         }
 
         @Override

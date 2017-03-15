@@ -15,7 +15,7 @@
     android:targetSdkVersion="14"/>
 
   <application
-    android:icon="@drawable/ic_launcher"
+    android:icon="@drawable/ok"
     android:theme="@style/Theme.Apptheme">
     <activity
       android:name=".MainActivity"

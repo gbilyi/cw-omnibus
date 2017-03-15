@@ -16,14 +16,35 @@ package com.commonsware.android.recyclerview.headerlist;
 
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.view.View;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class MainActivity extends RecyclerViewActivity {
+
+    private IconicAdapter mIconicAdapter;
 
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
+        setContentView(R.layout.activity_main);
 
         setLayoutManager(new LinearLayoutManager(this));
-        setAdapter(new IconicAdapter(getBaseContext()));
+        mIconicAdapter = new IconicAdapter(getBaseContext());
+        setAdapter(mIconicAdapter);
+    }
+
+    public void onClick(View view) {
+        List<List<String>> data = mIconicAdapter.getData();
+        List<String> featured = data.get(0);
+        featured.add(0, "blablah!");
+
+        String[] newArr = new String[]{"bla", "blah", "yo!"};
+        List<String> newItem = new ArrayList<>(Arrays.asList(newArr));
+        data.add(0, newItem);
+
+        mIconicAdapter.notifyDataSetChanged();
     }
 }

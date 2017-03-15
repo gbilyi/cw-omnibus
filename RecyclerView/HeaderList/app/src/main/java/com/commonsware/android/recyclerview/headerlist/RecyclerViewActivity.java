@@ -33,11 +33,12 @@ public class RecyclerViewActivity extends Activity {
   }
 
   public RecyclerView getRecyclerView() {
-    if (rv==null) {
-      rv=new RecyclerView(this);
-      setContentView(rv);
-    }
-
-    return(rv);
+//    if (rv==null) {
+//      rv=new RecyclerView(this);
+//      setContentView(rv);
+//    }
+//
+//    return(rv);
+    return (RecyclerView) findViewById(R.id.recycler_view);
   }
 }

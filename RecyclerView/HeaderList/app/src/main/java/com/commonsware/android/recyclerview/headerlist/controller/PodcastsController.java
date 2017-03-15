@@ -12,25 +12,33 @@
  https://commonsware.com/Android
  */
 
-package com.commonsware.android.recyclerview.headerlist;
+package com.commonsware.android.recyclerview.headerlist.controller;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
-class PodcastsController extends RecyclerView.ViewHolder {
-  TextView label=null;
-  String template=null;
+import com.commonsware.android.recyclerview.headerlist.R;
 
-  PodcastsController(View row) {
-    super(row);
+import java.util.List;
 
-    label=(TextView)row.findViewById(R.id.label);
+public class PodcastsController extends RecyclerView.ViewHolder {
+    TextView label = null;
+    String template = null;
 
-    template=label.getContext().getString(R.string.header_template);
-  }
+    public PodcastsController(View row) {
+        super(row);
 
-  void bindModel(String headerIndex) {
-    label.setText(headerIndex);
-  }
+        label = (TextView) row.findViewById(R.id.label);
+
+        template = label.getContext().getString(R.string.header_template);
+    }
+
+    public void bindModel(List<String> list) {
+        String result = "";
+        for (String i : list) {
+            result += i + " ";
+        }
+        label.setText(result);
+    }
 }
