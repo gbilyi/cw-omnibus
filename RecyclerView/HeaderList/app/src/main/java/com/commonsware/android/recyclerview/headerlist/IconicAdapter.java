@@ -2,6 +2,7 @@ package com.commonsware.android.recyclerview.headerlist;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -20,11 +21,11 @@ import java.util.List;
 public class IconicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private static final String[] featured = {"lorem", "ipsum", "dolor", "sit", "yo", "lorem", "ipsum"};
-    private static final String[] podcasts = {"lorem", "ipsum", "dolor", "sit", "yo", "lorem", "ipsum"};
+//    private static final String[] podcasts = {"lorem", "ipsum", "dolor", "sit", "yo", "lorem", "ipsum"};
     private static final String[] episodes = {"lorem", "ipsum", "dolor", "sit", "yo", "lorem", "ipsum"};
 
     private List<String> mFeatured = new ArrayList<>(Arrays.asList(featured));
-    private List<String> mPodcats = new ArrayList<>(Arrays.asList(podcasts));
+    private List<String> mPodcats = new ArrayList<>();
     private List<String> mEpisodes = new ArrayList<>(Arrays.asList(episodes));
 
     private List<List<String>> mData = new ArrayList<>();
@@ -35,6 +36,12 @@ public class IconicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         this.mContext = context;
 
         mData.add(mFeatured);
+
+
+        for (int i = 1; i <= 10; i++) {
+            mPodcats.add(String.format("http://lorempixel.com/300/300/sports/%d/", i));
+        }
+        mData.add(mPodcats);
         mData.add(mPodcats);
         for (int i = 0; i < 20; i++) {
             mData.add(mEpisodes);
@@ -56,7 +63,7 @@ public class IconicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
                         .inflate(R.layout.featured, parent, false)));
             }
             case R.id.podcasts: {
-                return (new PodcastsController(LayoutInflater.from(mContext)
+                return (new PodcastsController(mContext, LayoutInflater.from(mContext)
                         .inflate(R.layout.podcasts, parent, false)));
             }
             case R.id.episodes: {
@@ -72,6 +79,7 @@ public class IconicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         if (holder instanceof FeaturedController) {
             ((FeaturedController) holder).bindModel((List<String>) getItem(position));
         } else if (holder instanceof PodcastsController) {
+            Log.d("zzz", "pos = "+ position);
             ((PodcastsController) holder).bindModel((List<String>) getItem(position));
         } else {
             ((EpisodesController) holder).bindModel((List<String>) getItem(position));

@@ -14,9 +14,18 @@
 
 package com.commonsware.android.recyclerview.headerlist;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.support.v17.leanback.widget.HorizontalGridView;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+
+import com.bumptech.glide.Glide;
+import com.commonsware.android.recyclerview.headerlist.controller.PodcastsController;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -34,6 +43,14 @@ public class MainActivity extends RecyclerViewActivity {
         setLayoutManager(new LinearLayoutManager(this));
         mIconicAdapter = new IconicAdapter(getBaseContext());
         setAdapter(mIconicAdapter);
+
+//        List<String> mPodcats = new ArrayList<>();
+//        for (int i = 1; i <= 10; i++) {
+//            mPodcats.add(String.format("http://lorempixel.com/400/200/sports/%d/", i));
+//        }
+//
+//        HorizontalGridView horizontalGridView = (HorizontalGridView) findViewById(R.id.gridview);
+//        horizontalGridView.setAdapter(new ChannelHGridViewAdapter(this, mPodcats));
     }
 
     public void onClick(View view) {
@@ -46,5 +63,61 @@ public class MainActivity extends RecyclerViewActivity {
         data.add(0, newItem);
 
         mIconicAdapter.notifyDataSetChanged();
+    }
+
+    class ChannelHGridViewAdapter extends RecyclerView.Adapter {
+
+        public static final String MESSAGE_GRIDE_ITEM_ON_CLICK = "ChannelHGridViewAdapter.MESSAGE_GRIDE_ITEM_ON_CLICK";
+        public static final String KEY_PODCAST_ID = "podcast_id";
+        private static final String TAG = "ChannelHGridViewAdapter";
+
+        private Context mContext;
+        private List<String> mPodcasts;
+        private LayoutInflater mInflator;
+
+        public ChannelHGridViewAdapter(Context context, List<String> podcasts) {
+            mPodcasts = podcasts;
+            mContext = context;
+            mInflator = LayoutInflater.from(context);
+
+        }
+
+        @Override
+        public ChannelHGridViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            View itemView = mInflator.inflate(R.layout.item_podcast_cover, parent, false);
+            return new ChannelHGridViewAdapter.ViewHolder(itemView);
+        }
+
+        @Override
+        public void onBindViewHolder(RecyclerView.ViewHolder baseHolder, int position) {
+            ChannelHGridViewAdapter.ViewHolder holder = (ChannelHGridViewAdapter.ViewHolder) baseHolder;
+            ImageView img = holder.imgCoverArt;
+            img.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                }
+            });
+
+            Glide.with(mContext).load(mPodcasts.get(position)).into(img);
+        }
+
+        @Override
+        public int getItemCount() {
+            return mPodcasts.size();
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        class ViewHolder extends RecyclerView.ViewHolder {
+            public ImageView imgCoverArt;
+
+            public ViewHolder(View view) {
+                super(view);
+                imgCoverArt = (ImageView) view.findViewById(R.id.img_cover);
+            }
+        }
     }
 }
