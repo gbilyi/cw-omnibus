@@ -15,7 +15,9 @@
 package com.commonsware.android.recyclerview.headerlist.controller;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.v17.leanback.widget.HorizontalGridView;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -31,8 +33,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PodcastsController extends RecyclerView.ViewHolder {
-    TextView label = null;
-    String template = null;
 
     private HorizontalGridView mHorizontalGridView;
     private Context mContext;
@@ -40,20 +40,22 @@ public class PodcastsController extends RecyclerView.ViewHolder {
     public PodcastsController(Context context, View row) {
         super(row);
         mContext = context;
-//        label = (TextView) row.findViewById(R.id.label);
-//        template = label.getContext().getString(R.string.header_template);
-
         mHorizontalGridView = (HorizontalGridView) row.findViewById(R.id.gridview);
-//        mHorizontalGridView.setAdapter(new ChannelHGridViewAdapter(context, podcasts));
+        HorizontalGridView.LayoutManager layoutManager = new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false);
+        mHorizontalGridView.setLayoutManager(layoutManager);
+        mHorizontalGridView.setHasFixedSize(true);
+        mHorizontalGridView.setNumRows(1);
+//        mHorizontalGridView.setFadingRightEdge(true);
+//        mHorizontalGridView.setFadingLeftEdgeLength(50);
+//        mHorizontalGridView.setDescendantFocusability(ViewGroup.FOCUS_AFTER_DESCENDANTS);
+//        mHorizontalGridView.setBackgroundColor(Color.GREEN);
+//        mHorizontalGridView.setDrawingCacheEnabled(true);
+        //mHorizontalGridView.setWindowAlignment(HorizontalGridView.);
+       // mHorizontalGridView.setWindowAlignment(HorizontalGridView.WINDOW_ALIGN_NO_EDGE);
+       // mHorizontalGridView.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_YES);
     }
 
     public void bindModel(List<String> podcasts) {
-//        String result = "";
-//        for (String i : list) {
-//            result += i + " ";
-//        }
-//        label.setText(result);
-        Log.d("zzz", "bindModel " + podcasts);
         mHorizontalGridView.setAdapter(new ChannelHGridViewAdapter(mContext, podcasts));
     }
 

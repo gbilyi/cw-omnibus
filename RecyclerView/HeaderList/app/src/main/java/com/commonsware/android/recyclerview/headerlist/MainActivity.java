@@ -14,12 +14,16 @@
 
 package com.commonsware.android.recyclerview.headerlist;
 
+import android.app.ActivityManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v17.leanback.widget.HorizontalGridView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -43,14 +47,29 @@ public class MainActivity extends RecyclerViewActivity {
         setLayoutManager(new LinearLayoutManager(this));
         mIconicAdapter = new IconicAdapter(getBaseContext());
         setAdapter(mIconicAdapter);
+    }
 
-//        List<String> mPodcats = new ArrayList<>();
-//        for (int i = 1; i <= 10; i++) {
-//            mPodcats.add(String.format("http://lorempixel.com/400/200/sports/%d/", i));
-//        }
-//
-//        HorizontalGridView horizontalGridView = (HorizontalGridView) findViewById(R.id.gridview);
-//        horizontalGridView.setAdapter(new ChannelHGridViewAdapter(this, mPodcats));
+    private void clearAppData() {
+        ((ActivityManager) getSystemService(ACTIVITY_SERVICE))
+                .clearApplicationUserData();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.clear_cache:
+                clearAppData();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     public void onClick(View view) {

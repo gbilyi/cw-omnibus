@@ -34,8 +34,8 @@ public class HorizontalGridTestActivity extends Activity {
         mInflator = LayoutInflater.from(this);
         View view = getLayoutInflater().inflate(R.layout.podcasts, null, false);
         mHorizontalGridView = (HorizontalGridView) view.findViewById(R.id.gridview);
-        mHorizontalGridView.setWindowAlignment(HorizontalGridView.WINDOW_ALIGN_BOTH_EDGE);
-        mHorizontalGridView.setWindowAlignmentOffsetPercent(35);
+        mHorizontalGridView.setWindowAlignment(HorizontalGridView.SAVE_ALL_CHILD);
+       // mHorizontalGridView.setWindowAlignmentOffsetPercent(35);
         return view;
     }
 
@@ -72,12 +72,14 @@ public class HorizontalGridTestActivity extends Activity {
 
         @Override
         public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            Log.d("zzz", "onCreateViewHolder");
             View itemView = mInflator.inflate(R.layout.item_podcast_cover, parent, false);
             return new ViewHolder(itemView);
         }
 
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder baseHolder, int position) {
+            Log.d("zzz", "onBindViewHolder");
             ViewHolder holder = (ViewHolder) baseHolder;
             ImageView img = holder.imgCoverArt;
             Glide.with(holder.itemView.getContext())

@@ -12,6 +12,7 @@ import com.commonsware.android.recyclerview.headerlist.controller.PodcastsContro
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -24,9 +25,9 @@ public class IconicAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
 //    private static final String[] podcasts = {"lorem", "ipsum", "dolor", "sit", "yo", "lorem", "ipsum"};
     private static final String[] episodes = {"lorem", "ipsum", "dolor", "sit", "yo", "lorem", "ipsum"};
 
-    private List<String> mFeatured = new ArrayList<>(Arrays.asList(featured));
-    private List<String> mPodcats = new ArrayList<>();
-    private List<String> mEpisodes = new ArrayList<>(Arrays.asList(episodes));
+    private List<String> mFeatured = new LinkedList<>(Arrays.asList(featured));
+    private List<String> mPodcats = new LinkedList<>();
+    private List<String> mEpisodes = new LinkedList<>(Arrays.asList(episodes));
 
     private List<List<String>> mData = new ArrayList<>();
 
